@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+      integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+    <link rel="stylesheet" href="style_dashboard2.css" />
+    <link rel="stylesheet" href="yearpicker.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/yourcode.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.css"
+    />
+    <script src="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"
+      integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.js"
+      integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+      crossorigin="anonymous"
+    ></script>
+    <title>Dashboard2</title>
+
+    <style>
+      .leaflet-tooltip.my-labels {
+        background-color: transparent;
+        border: transparent;
+        box-shadow: none;
+        font-size: 12px;
+      }
+
+      .leaflet-tooltip.my-labels-ward {
+        background-color: transparent;
+        border: transparent;
+        box-shadow: none;
+        font-size: 12px;
+      }
+
+      .info {
+        padding: 6px 8px;
+        font: 14px/16px Arial, Helvetica, sans-serif;
+        background: white;
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="bg-gray-800">
+      <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div class="relative flex items-center justify-between h-16">
+          <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+            <!-- Mobile menu button -->
+            <button
+              type="button"
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+            >
+              <span class="sr-only">Open main menu</span>
+              <!-- Icon when menu is closed. -->
+              <!--
+                  Heroicon name: menu
+      
+                  Menu open: "hidden", Menu closed: "block"
+                -->
+              <svg
+                class="block h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <!-- Icon when menu is open. -->
+              <!--
+                  Heroicon name: x
+      
+                  Menu open: "block", Menu closed: "hidden"
+                -->
+              <svg
+                class="hidden h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
+          >
+            <div class="flex-shrink-0">
+              <!-- Replace with your logo -->
+              <a href="/" class="text-white text-2xl font-bold">Logo</a>
+            </div>
+            <div class="hidden sm:block sm:ml-6">
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >Home</a
+                >
+
+                <a
+                  href="#"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >About</a
+                >
+
+                <a
+                  href="#"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >Services</a
+                >
+
+                <a
+                  href="#"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >Team</a
+                >
+
+                <a
+                  href="#"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >Contact</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile menu, show/hide based on menu state. -->
+      <div class="sm:hidden hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <a
+            href="#"
+            class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gray-900 hover:bg-gray-50"
+            >Home</a
+          >
+          <a
+            href="#"
+            class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gray-900 hover:bg-gray-50"
+            >About</a
+          >
+          <a
+            href="#"
+            class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gray-900 hover:bg-gray-50"
+            >Services</a
+          >
+          <a
+            href="#"
+            class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gray-900 hover:bg-gray-50"
+            >Team</a
+          >
+          <a
+            href="#"
+            class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gray-900 hover:bg-gray-50"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+      <div class="md:flex">
+        <div class="md:w-2/4">
+          <div class="flex justify-between">
+            <div class="button-bar p-2">
+              <div class="buttons">
+                <button
+                  id="drillDown"
+                  class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none"
+                >
+                  Drill Down
+                </button>
+                <button
+                  id="drillUp"
+                  class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none"
+                >
+                  Drill Up
+                </button>
+              </div>
+            </div>
+          </div>
+          <div id="map"></div>
+        </div>
+
+        <div class="md:w-2/4 mx-4">
+          <div class="grid grid-cols-2 gap-4 pt-5">
+            <div class="col-span-1">
+              <div class="mb-4">
+                <label
+                  for="time_period"
+                  class="block text-gray-700 font-bold mb-2"
+                  >Select Timeperiod</label
+                >
+                <div class="relative">
+                  <select
+                    id="time_period"
+                    class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                  >
+                    <option value="none" selected>None</option>
+                    <option value="rainy">Rainy</option>
+                    <option value="winter">Winter</option>
+                    <option value="autum">Autum</option>
+                    <option value="summer">Summer</option>
+                  </select>
+                  <div
+                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                  >
+                    <svg
+                      class="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M14.707 7.293a1 1 0 0 0-1.414 0L10 10.586 6.707 7.293a1 1 0 1 0-1.414 1.414l3 3a1 1 0 0 0 1.414 0l3-3a1 1 0 0 0 0-1.414z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label for="year" class="block text-gray-700 font-bold mb-2"
+                  >Select Year</label
+                >
+                <input
+                  type="text"
+                  class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                  id="year"
+                  readonly="readonly"
+                />
+              </div>
+              <div class="my-4">
+                <label for="delay" class="block font-medium text-gray-700 mb-2"
+                  >Select delay</label
+                >
+                <select
+                  id="delay"
+                  name="delay"
+                  class="block appearance-none w-64 bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  <option value="0.5">0.5</option>
+                  <option value="1" selected>1</option>
+                  <option value="1.25">1.25</option>
+                  <option value="1.5">1.5</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="mb-4">
+                <label for="month" class="block text-gray-700 font-bold mb-2"
+                  >Select Month</label
+                >
+                <div class="relative">
+                  <select
+                    id="month"
+                    class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                  >
+                    <option value="01">Jan</option>
+                    <option value="02">Feb</option>
+                    <option value="03">Mar</option>
+                    <option value="04">Apr</option>
+                    <option value="05">May</option>
+                    <option value="06">Jun</option>
+                    <option value="07">Jul</option>
+                    <option value="08">Aug</option>
+                    <option value="09" selected>Sep</option>
+                    <option value="10">Oct</option>
+                    <option value="11">Nov</option>
+                    <option value="12">Dec</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="">
+                <div class="">
+                  <label
+                    for="waste_type"
+                    class="block font-medium text-gray-700 mb-2"
+                    >Select Type of Data</label
+                  >
+                  <div class="relative">
+                    <select
+                      id="waste_type"
+                      name="waste_type"
+                      class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                    >
+                      <option value="dryWaste">Dry waste</option>
+                      <option value="wetWaste">Wet waste</option>
+                      <option value="totalWaste">Total waste</option>
+                      <option value="weight" selected>Weight</option>
+                    </select>
+                    <div
+                      class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                    >
+                      <svg
+                        class="fill-current h-4 w-4"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9 11l5-5-5-5V11z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="my-2">
+              <label for="myRange" class="block font-medium text-gray-700 mb-2"
+                >Selected Day is
+                <span id="demo" class="font-medium text-gray-700 mt-2"
+                  >1</span
+                ></label
+              >
+
+              <div class="relative">
+                <input
+                  type="range"
+                  min="1"
+                  max="31"
+                  value="01"
+                  default="1"
+                  class="block appearance-none w-full bg-gray-200 h-4 rounded-full shadow-inner outline-none slider"
+                  id="myRange"
+                />
+              </div>
+            </div>
+            <br />
+            <div class="">
+              <input
+                type="button"
+                name="auto"
+                id="au"
+                value="start"
+                onclick="fun()"
+                class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-medium rounded"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <script src="{%static 'js/script_dashboard2.js'%}"></script> -->
+    <!-- <script src="script.js" type="module"></script> -->
+
+    <script src="yearpicker.js"></script>
+    <script type="module" src="script_dashboard2.js"></script>
+  </body>
+</html>
